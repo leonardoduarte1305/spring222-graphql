@@ -1,0 +1,12 @@
+type Cliente{
+	id:ID
+	nome:String
+	email:String
+}
+
+extend type Query{
+
+	cliente(id:ID):Cliente
+	
+	clientes:[Cliente]
+}
