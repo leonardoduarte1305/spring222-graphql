@@ -1,11 +1,11 @@
-package dev.leoduarte.compras.graphql;
+package dev.leoduarte.compras.controller;
 
 import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 
 @Component
-public class HelloWorldGraphQL implements GraphQLQueryResolver {
+public class HelloWorldController implements GraphQLQueryResolver {
 
 	public String hello() {
 		return "Hello GraphQL";
