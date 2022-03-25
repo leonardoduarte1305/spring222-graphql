@@ -11,15 +11,11 @@ input ClienteInput{
 }
 
 extend type Query{
-
 	cliente(id:ID!):Cliente
-	
 	clientes:[Cliente]!
 }
 
 extend type Mutation{
-	
 	saveCliente(cliente:ClienteInput!):Cliente!
-	
 	deleteCliente(id:ID!):Boolean!
 }
