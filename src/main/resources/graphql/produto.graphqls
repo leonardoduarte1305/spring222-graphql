@@ -2,6 +2,7 @@ type Produto{
 	id:ID!
 	nome:String!
 	valor:Float!
+	valorReais:String!
 }
 
 input ProdutoInput{

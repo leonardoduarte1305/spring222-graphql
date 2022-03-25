@@ -7,9 +7,12 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import dev.leoduarte.compras.model.Cliente;
 import dev.leoduarte.compras.model.Compra;
+import dev.leoduarte.compras.model.CompraResumo;
 import dev.leoduarte.compras.model.input.CompraInput;
 import dev.leoduarte.compras.repository.CompraRepository;
 
@@ -24,8 +27,8 @@ public class CompraService {
 		return repository.findById(id).orElse(null);
 	}
 
-	public List<Compra> findAll() {
-		return repository.findAll();
+	public List<Compra> findAll(int page, int size) {
+		return repository.findAll(PageRequest.of(page, size)).getContent();
 	}
 
 	@Transactional
@@ -55,5 +58,13 @@ public class CompraService {
 		this.repository = repository;
 		this.cliService = cliService;
 		this.prodService = prodService;
+	}
+
+	public List<Compra> findAllByCliente(Cliente cliente) {
+		return repository.findAllByCliente(cliente);
+	}
+
+	public List<CompraResumo> findAllComprasRelatorio() {
+		return repository.findAllComprasRelatorio();
 	}
 }

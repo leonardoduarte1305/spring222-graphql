@@ -1,4 +1,4 @@
-package dev.leoduarte.compras.controller;
+package dev.leoduarte.compras.graphql;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import dev.leoduarte.compras.model.input.ClienteInput;
 import dev.leoduarte.compras.service.ClienteService;
 
 @Component
-public class ClienteController implements GraphQLQueryResolver, GraphQLMutationResolver {
+public class ClienteGraphql implements GraphQLQueryResolver, GraphQLMutationResolver {
 
 	private ClienteService service;
 
@@ -34,7 +34,7 @@ public class ClienteController implements GraphQLQueryResolver, GraphQLMutationR
 	}
 
 	@Autowired
-	public ClienteController(ClienteService service) {
+	public ClienteGraphql(ClienteService service) {
 		this.service = service;
 	}
 }

@@ -14,9 +14,17 @@ input CompraInput{
 	produtoId:ID!
 }
 
+type CompraRelatorio{
+	id:ID!
+	cliente:String!
+	produto:String!
+	quantidade:Int!
+}
+
 extend type Query{
 	compra(id:ID!):Compra
-	compras:[Compra]!
+	compras(page:Int = 0, size:Int = 2):[Compra]!
+	compraRelatorio:[CompraRelatorio]!
 }
 
 extend type Mutation{

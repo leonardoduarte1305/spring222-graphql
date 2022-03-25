@@ -1,4 +1,4 @@
-package dev.leoduarte.compras.controller;
+package dev.leoduarte.compras.graphql;
 
 import java.util.List;
 
@@ -9,11 +9,12 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 
 import dev.leoduarte.compras.model.Compra;
+import dev.leoduarte.compras.model.CompraResumo;
 import dev.leoduarte.compras.model.input.CompraInput;
 import dev.leoduarte.compras.service.CompraService;
 
 @Component
-public class CompraController implements GraphQLQueryResolver, GraphQLMutationResolver {
+public class CompraGraphql implements GraphQLQueryResolver, GraphQLMutationResolver {
 
 	private CompraService service;
 
@@ -21,8 +22,8 @@ public class CompraController implements GraphQLQueryResolver, GraphQLMutationRe
 		return service.findById(id);
 	}
 
-	public List<Compra> compras() {
-		return service.findAll();
+	public List<Compra> compras(int page, int size) {
+		return service.findAll(page, size);
 	}
 
 	public Compra saveCompra(CompraInput input) {
@@ -33,8 +34,12 @@ public class CompraController implements GraphQLQueryResolver, GraphQLMutationRe
 		return service.deleteById(id);
 	}
 
+	public List<CompraResumo> compraRelatorio() {
+		return service.findAllComprasRelatorio();
+	}
+
 	@Autowired
-	public CompraController(CompraService service) {
+	public CompraGraphql(CompraService service) {
 		this.service = service;
 	}
 }
