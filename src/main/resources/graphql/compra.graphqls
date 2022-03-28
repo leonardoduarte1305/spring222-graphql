@@ -1,17 +1,18 @@
-type Compra{
-	id:ID!
-	quantidade:Int!
-	status:String!
-	cliente:Cliente
-	produto:Produto!
-}
-
 input CompraInput{
 	id:ID
 	quantidade:Int!
 	status:String!
 	clienteId:ID!
 	produtoId:ID!
+}
+
+type Compra{
+	id:ID!
+	data:Date!
+	quantidade:Int!
+	status:String!
+	cliente:Cliente
+	produto:Produto!
 }
 
 type CompraRelatorio{

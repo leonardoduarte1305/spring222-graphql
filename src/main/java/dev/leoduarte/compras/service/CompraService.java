@@ -53,18 +53,18 @@ public class CompraService {
 		return false;
 	}
 
-	@Autowired
-	public CompraService(CompraRepository repository, ProdutoService prodService, ClienteService cliService) {
-		this.repository = repository;
-		this.cliService = cliService;
-		this.prodService = prodService;
-	}
-
 	public List<Compra> findAllByCliente(Cliente cliente) {
 		return repository.findAllByCliente(cliente);
 	}
 
 	public List<CompraResumo> findAllComprasRelatorio() {
 		return repository.findAllComprasRelatorio();
+	}
+
+	@Autowired
+	public CompraService(CompraRepository repository, ProdutoService prodService, ClienteService cliService) {
+		this.repository = repository;
+		this.cliService = cliService;
+		this.prodService = prodService;
 	}
 }
