@@ -25,7 +25,7 @@ type CompraRelatorio{
 extend type Query{
 	compra(id:ID!):Compra
 	compras(page:Int = 0, size:Int = 2):[Compra]!
-	compraRelatorio:[CompraRelatorio]!
+	getComprasRelatorio:[CompraRelatorio]!
 }
 
 extend type Mutation{

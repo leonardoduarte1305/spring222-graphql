@@ -1,53 +1,41 @@
 package dev.leoduarte.compras.service;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import dev.leoduarte.compras.exception.DomainException;
 import dev.leoduarte.compras.model.Cliente;
 import dev.leoduarte.compras.model.Compra;
 import dev.leoduarte.compras.model.CompraResumo;
-import dev.leoduarte.compras.model.input.CompraInput;
 import dev.leoduarte.compras.repository.CompraRepository;
 
 @Service
 public class CompraService {
 
 	private CompraRepository repository;
-	private ProdutoService prodService;
-	private ClienteService cliService;
 
 	public Compra findById(Long id) {
 		return repository.findById(id).orElse(null);
 	}
 
-	public List<Compra> findAll(int page, int size) {
-		return repository.findAll(PageRequest.of(page, size)).getContent();
+	public List<Compra> findAll(Pageable p) {
+		return repository.findAll(p).getContent();
 	}
 
 	@Transactional
-	@CacheEvict(value = "comprasByCliente", key = "#input.clienteId")
-	public Compra save(CompraInput input) {
-		ModelMapper m = new ModelMapper();
-		Compra compra = m.map(input, Compra.class);
+	public Compra save(Compra c) {
+		if (c.getQuantidade() > 100) {
+			throw new DomainException("Não é possível fazer uma compra com mais de 100 itens.");
+		}
 
-		compra.setData(new Date());
-
-		compra.setCliente(cliService.findById(input.getClienteId()));
-		compra.setProduto(prodService.findById(input.getProdutoId()));
-
-		return repository.save(compra);
+		return repository.save(c);
 	}
 
-	@CacheEvict(value = "comprasByCliente", allEntries = true)
 	@Transactional
 	public boolean deleteById(Long id) {
 		if (repository.findById(id).isPresent()) {
@@ -57,9 +45,8 @@ public class CompraService {
 		return false;
 	}
 
-	@Cacheable(value = "comprasByCliente", key = "#cliente.id")
 	public List<Compra> findAllByCliente(Cliente cliente) {
-		return repository.findAllByCliente(cliente);
+		return repository.findAllByCliente(cliente.getId());
 	}
 
 	public List<CompraResumo> findAllComprasRelatorio() {
@@ -67,9 +54,7 @@ public class CompraService {
 	}
 
 	@Autowired
-	public CompraService(CompraRepository repository, ProdutoService prodService, ClienteService cliService) {
+	public CompraService(CompraRepository repository) {
 		this.repository = repository;
-		this.cliService = cliService;
-		this.prodService = prodService;
 	}
 }

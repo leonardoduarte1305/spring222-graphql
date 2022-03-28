@@ -2,6 +2,7 @@ package dev.leoduarte.compras.graphql;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,10 @@ public class ClienteGraphql implements GraphQLQueryResolver, GraphQLMutationReso
 	}
 
 	public Cliente saveCliente(ClienteInput input) {
-		return service.save(input);
+		ModelMapper m = new ModelMapper();
+		Cliente cli = m.map(input, Cliente.class);
+
+		return service.save(cli);
 	}
 
 	public boolean deleteCliente(Long id) {

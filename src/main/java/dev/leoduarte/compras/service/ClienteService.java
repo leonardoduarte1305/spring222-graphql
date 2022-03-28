@@ -4,14 +4,10 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import dev.leoduarte.compras.model.Cliente;
-import dev.leoduarte.compras.model.input.ClienteInput;
 import dev.leoduarte.compras.repository.ClienteRepository;
 
 @Service
@@ -23,20 +19,15 @@ public class ClienteService {
 		return repository.findById(id).orElse(null);
 	}
 
-	@Cacheable(value = "clientes")
 	public List<Cliente> findAll() {
 		return repository.findAll();
 	}
 
 	@Transactional
-	public Cliente save(ClienteInput input) {
-		ModelMapper m = new ModelMapper();
-		Cliente cli = m.map(input, Cliente.class);
-
-		return repository.save(cli);
+	public Cliente save(Cliente c) {
+		return repository.save(c);
 	}
 
-	//@CacheEvict(value = "clientes", key = "$id")
 	@Transactional
 	public boolean deleteById(Long id) {
 		if (repository.findById(id).isPresent()) {
