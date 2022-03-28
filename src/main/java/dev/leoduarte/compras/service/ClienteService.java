@@ -6,6 +6,8 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import dev.leoduarte.compras.model.Cliente;
@@ -21,6 +23,7 @@ public class ClienteService {
 		return repository.findById(id).orElse(null);
 	}
 
+	@Cacheable(value = "clientes")
 	public List<Cliente> findAll() {
 		return repository.findAll();
 	}
@@ -33,6 +36,7 @@ public class ClienteService {
 		return repository.save(cli);
 	}
 
+	@CacheEvict(value = "clientes", key = "$id")
 	@Transactional
 	public boolean deleteById(Long id) {
 		if (repository.findById(id).isPresent()) {

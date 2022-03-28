@@ -1,4 +1,4 @@
-package dev.leoduarte.compras.resolver;
+package dev.leoduarte.compras.graphql.resolver;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

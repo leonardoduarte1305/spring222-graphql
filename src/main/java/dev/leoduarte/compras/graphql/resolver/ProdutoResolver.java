@@ -1,4 +1,4 @@
-package dev.leoduarte.compras.resolver;
+package dev.leoduarte.compras.graphql.resolver;
 
 import org.springframework.stereotype.Component;
 

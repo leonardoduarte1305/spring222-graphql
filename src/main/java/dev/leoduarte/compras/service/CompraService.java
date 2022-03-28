@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,7 @@ public class CompraService {
 	}
 
 	@Transactional
+	@CacheEvict(value = "comprasByCliente", key = "#input.cliente.id")
 	public Compra save(CompraInput input) {
 		ModelMapper m = new ModelMapper();
 		Compra compra = m.map(input, Compra.class);
@@ -44,6 +47,7 @@ public class CompraService {
 		return repository.save(compra);
 	}
 
+	@CacheEvict(value = "comprasByCliente", key = "#id")
 	@Transactional
 	public boolean deleteById(Long id) {
 		if (repository.findById(id).isPresent()) {
@@ -53,6 +57,7 @@ public class CompraService {
 		return false;
 	}
 
+	@Cacheable(value = "comprasByCliente", key = "#cliente.id")
 	public List<Compra> findAllByCliente(Cliente cliente) {
 		return repository.findAllByCliente(cliente);
 	}

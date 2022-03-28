@@ -2,6 +2,7 @@ package dev.leoduarte.compras.model;
 
 import java.util.Date;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Cacheable
 @Table(name = "compra")
 public class Compra {
 
