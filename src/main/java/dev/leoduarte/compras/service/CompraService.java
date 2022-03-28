@@ -34,7 +34,7 @@ public class CompraService {
 	}
 
 	@Transactional
-	@CacheEvict(value = "comprasByCliente", key = "#input.cliente.id")
+	@CacheEvict(value = "comprasByCliente", key = "#input.clienteId")
 	public Compra save(CompraInput input) {
 		ModelMapper m = new ModelMapper();
 		Compra compra = m.map(input, Compra.class);
@@ -47,7 +47,7 @@ public class CompraService {
 		return repository.save(compra);
 	}
 
-	@CacheEvict(value = "comprasByCliente", key = "#id")
+	@CacheEvict(value = "comprasByCliente", allEntries = true)
 	@Transactional
 	public boolean deleteById(Long id) {
 		if (repository.findById(id).isPresent()) {

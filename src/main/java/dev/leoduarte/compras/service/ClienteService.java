@@ -36,7 +36,7 @@ public class ClienteService {
 		return repository.save(cli);
 	}
 
-	@CacheEvict(value = "clientes", key = "$id")
+	//@CacheEvict(value = "clientes", key = "$id")
 	@Transactional
 	public boolean deleteById(Long id) {
 		if (repository.findById(id).isPresent()) {
