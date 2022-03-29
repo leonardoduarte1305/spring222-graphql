@@ -1,1 +1,1 @@
-web: java -jar target/api.jar
+web: java -jar target/spring222-graphql-0.0.1-SNAPSHOT.jar
